@@ -19,9 +19,8 @@
     <properties>
         <jenkins.version>2.440.3</jenkins.version>
         <!-- Maven Plugins -->
-        <maven-release-plugin.version>2.5.1</maven-release-plugin.version>
+        <maven-release-plugin.version>3.1.1</maven-release-plugin.version>
         <maven-site-plugin.version>3.3</maven-site-plugin.version>
-        <plugin.gitflow-maven.version>1.21.0</plugin.gitflow-maven.version>
     </properties>
 
     <licenses>
@@ -150,34 +149,19 @@
     </dependencies>
 
     <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>com.amashchenko.maven.plugin</groupId>
-                    <artifactId>gitflow-maven-plugin</artifactId>
-                    <version>${plugin.gitflow-maven.version}</version>
-                    <configuration>
-                        <gitFlowConfig>
-                            <productionBranch>main</productionBranch>
-                            <developmentBranch>develop</developmentBranch>
-                            <featureBranchPrefix>feature/</featureBranchPrefix>
-                            <releaseBranchPrefix>release/</releaseBranchPrefix>
-                            <hotfixBranchPrefix>hotfix/</hotfixBranchPrefix>
-                            <supportBranchPrefix>support/</supportBranchPrefix>
-                            <versionTagPrefix>v</versionTagPrefix>
-                            <origin>origin</origin>
-                        </gitFlowConfig>
-                        <keepBranch>false</keepBranch>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
                     <additionalparam>-Xdoclint:none</additionalparam>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>${maven-release-plugin.version}</version>
+                <configuration>
+                    <tagNameFormat>v@{project.version}</tagNameFormat>
                 </configuration>
             </plugin>
         </plugins>
