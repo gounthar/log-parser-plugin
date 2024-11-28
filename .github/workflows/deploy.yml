@@ -29,6 +29,7 @@ jobs:
                 with:
                     distribution: 'adopt'
                     java-version: 11
+                    cache: 'maven'
 
             -   name: Setup settings.xml
                 uses: s4u/maven-settings-action@v3.1.0
