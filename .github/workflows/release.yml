@@ -5,7 +5,7 @@ on:
     workflow_dispatch:
         inputs:
             releaseversion:
-                description: 'Release version (yyyy.mm.<no>)'
+                description: 'Release version (<major>.<minor>.<patch>)'
                 required: true
                 type: string
                 default: "X.Y.Z"
@@ -91,8 +91,7 @@ jobs:
                     commit-message: Update report
                     committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
                     author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
-                    branch: release/${{ inputs.releaseversion }}
-                    base: develop
+                    branch: develop
                     delete-branch: true
                     title: '[Release] ${{ inputs.releaseversion }}'
                     body: |
