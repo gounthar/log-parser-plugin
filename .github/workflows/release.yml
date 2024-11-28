@@ -1,10 +1,6 @@
 name: create release
 run-name: "Release ${{ inputs.releaseversion }}"
 
-env:
-    IMAGE_NAME_DB: "msamt-online/db"
-    REGISTRY: "ghcr.io/bungeberatung"
-
 on:
     workflow_dispatch:
         inputs:
@@ -82,6 +78,7 @@ jobs:
                     committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
                     author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
                     branch: release/${{ inputs.releaseversion }}
+                    base: develop
                     delete-branch: true
                     title: '[Release] ${{ inputs.releaseversion }}'
                     body: |
