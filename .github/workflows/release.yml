@@ -56,12 +56,16 @@ jobs:
 
 
             -   name: Create release
+                id: create-release
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                 run: |
                     export TZ="Europe/Berlin"
                     git checkout -b release/${{ inputs.releaseversion }}
-                    mvn release:prepare release:perform -B -DreleaseVersion=${{ inputs.releaseversion }} -DpushChanges=false -DskipITs=true  -DlocalCheckout=true -D"arguments=-DskipITs=true"
+                    mvn release:prepare release:perform -B -DreleaseVersion=${{ inputs.releaseversion }} -DpushChanges=false -DskipTests=true -DskipITs=true  -DlocalCheckout=true -D"arguments=-Dmaven.deploy.skip=true -DskipTests=true -DskipITs=true"
+                    # manually push
+                    git push --tags
+                    git push origin release/${{ inputs.releaseversion }}
                     # write version info
                     cat <<EOF >target/config.json
                     {
@@ -88,6 +92,7 @@ jobs:
                     draft: false
 
             -   name: Conventional Changelog Action
+                id: create-changelog
                 uses: TriPSs/conventional-changelog-action@v5
                 with:
                     input-file: CHANGELOG.md
