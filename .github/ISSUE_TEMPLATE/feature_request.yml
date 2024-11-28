@@ -1,0 +1,27 @@
+name: ✨Feature Request
+description: Request a new feature or enhancement
+labels: ["enhancement"]
+title: "Add a meaningful name"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please describe the desired feature as clear as possible
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Give us a brief description of the feature or enhancement you would like
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: All thinks that must be fullfilled due the change.
+      placeholder: |
+        [ ] List item
+    validations:
+      required: true

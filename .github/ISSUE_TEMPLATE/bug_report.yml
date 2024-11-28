@@ -1,0 +1,55 @@
+name: 🐛Bug Report
+description: File a bug report here
+title: "[BUG] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please make sure to enter all needed information.
+
+  - type: textarea
+    id: prerequisites
+    attributes:
+      label: Prerequisites
+      description: Please answer the following questions for yourself before submitting an issue.
+      placeholder: |
+        - [ ] I am running the latest version
+        - [ ] I checked the documentation and found no answer
+        - [ ] I checked to make sure that this issue has not already been filed
+        - [ ] I'm reporting the issue to the correct repository
+    validations:
+      required: true
+
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: Description of the bug
+      description: Give us a brief description of what happened and what should have happened
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Steps To Reproduce
+      description: Steps to reproduce the behavior.
+      placeholder: |
+        1. Go to '...'
+        2. Click on '...'
+        3. Scroll down to '...'
+        4. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-information
+    attributes:
+      label: Additional Information
+      description: |
+        Please provide any relevant information about your setup. This is important in case the issue is not reproducible except for under certain conditions.
+      placeholder: |
+        * Java version
+        * Jenkins version
+        * Operating System
+        * Log files
