@@ -58,7 +58,7 @@ jobs:
                 run: |
                     export TZ="Europe/Berlin"
                     git checkout -b release/${{ inputs.releaseversion }}
-                    mvn release:prepare release:perform -B -DreleaseVersion=${{ inputs.releaseversion }} -DpushChanges=false -DskipTests=true -DskipITs=true  -DlocalCheckout=true -D"arguments=-Dmaven.deploy.skip=true -DskipTests=true -DskipITs=true"
+                    mvn release:prepare release:perform -B -DreleaseVersion=${{ inputs.releaseversion }} -DpushChanges=false -DskipTests=true -DskipITs=true  -D"arguments=-Dmaven.deploy.skip=true -DskipTests=true -DskipITs=true"
                     # manually push
                     git push --tags
                     git push origin release/${{ inputs.releaseversion }}
@@ -69,6 +69,19 @@ jobs:
                       "version": "${{ inputs.releaseversion }}"
                     }
                     EOF
+
+            -   name: Conventional Changelog Action
+                id: create-changelog
+                uses: TriPSs/conventional-changelog-action@v5
+                with:
+                    input-file: CHANGELOG.md
+                    github-token: ${{ secrets.GITHUB_TOKEN }}
+                    version-file: target/config.json
+                    pre-release: true
+                    skip-bump: true
+                    skip-tag: true
+                    skip-on-empty: true
+                    tag-prefix: 'v'
 
 
             -   name: Create Pull Request
@@ -88,16 +101,3 @@ jobs:
                         release
                     assignees: hypery2k
                     draft: false
-
-            -   name: Conventional Changelog Action
-                id: create-changelog
-                uses: TriPSs/conventional-changelog-action@v5
-                with:
-                    input-file: CHANGELOG.md
-                    github-token: ${{ secrets.GITHUB_TOKEN }}
-                    version-file: target/config.json
-                    pre-release: true
-                    skip-bump: true
-                    skip-tag: true
-                    skip-on-empty: true
-                    tag-prefix: 'v'
