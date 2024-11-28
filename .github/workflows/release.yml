@@ -62,6 +62,7 @@ jobs:
                     # manually push
                     git push --tags
                     git push origin release/${{ inputs.releaseversion }}
+                    git branch --set-upstream-to=origin/release/${{ inputs.releaseversion }} release/release/${{ inputs.releaseversion }}
                     # write version info
                     cat <<EOF >target/config.json
                     {
