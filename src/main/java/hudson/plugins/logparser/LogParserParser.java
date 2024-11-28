@@ -218,6 +218,11 @@ public class LogParserParser {
         return parseLine(line, null);
     }
 
+    public static String convertEscapeSequencesToHtml(String text) {
+        // Remove xterm color escape sequence with an empty space.
+        return text.replaceAll("\u001B\\[(\\d{1,2})(;\\d{1,2})?(;\\d{1,2})?m", "");
+    }
+
     public String parseLine(final String line, final String status)
             throws IOException {
         String parsedLine = line;
@@ -234,6 +239,9 @@ public class LogParserParser {
         parsedLine = parsedLine.replaceAll("<", "&lt;");
         // Allows > to be seen in log which is html
         parsedLine = parsedLine.replaceAll(">", "&gt;");
+
+        // Remove xterm color escape sequence with an empty space.
+        parsedLine = convertEscapeSequencesToHtml(parsedLine);
 
         if (effectiveStatus != null
                 && !effectiveStatus.equals(LogParserConsts.NONE)) {
