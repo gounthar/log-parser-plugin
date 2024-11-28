@@ -55,6 +55,21 @@ jobs:
                         }]
 
 
+            -   name: Create release
+                env:
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                run: |
+                    export TZ="Europe/Berlin"
+                    git checkout -b release/${{ inputs.releaseversion }}
+                    mvn release:prepare release:perform -B -DreleaseVersion=${{ inputs.releaseversion }} -DpushChanges=false -DskipITs=true  -DlocalCheckout=true -D"arguments=-DskipITs=true"
+                    # write version info
+                    cat <<EOF >target/config.json
+                    {
+                      "version": "${{ inputs.releaseversion }}"
+                    }
+                    EOF
+
+
             -   name: Create Pull Request
                 id: create-pr
                 uses: peter-evans/create-pull-request@v7
@@ -71,20 +86,6 @@ jobs:
                         release
                     assignees: hypery2k
                     draft: false
-
-            -   name: Create release
-                env:
-                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                run: |
-                    export TZ="Europe/Berlin"
-                    mvn release:prepare release:perform -B -DreleaseVersion=${{ inputs.releaseversion }} -DskipITs=true  -DlocalCheckout=true -D"arguments=-DskipITs=true"
-                    # write version info
-                    cat <<EOF >target/config.json
-                    {
-                      "version": "${{ inputs.releaseversion }}"
-                    }
-                    EOF
-
 
             -   name: Conventional Changelog Action
                 uses: TriPSs/conventional-changelog-action@v5
