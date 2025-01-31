@@ -46,7 +46,7 @@ jobs:
                     servers: |
                         [{
                             "id": "repo.jenkins-ci.org",
-                            "username": "${{ secrets.OSS_JENKINS_USER }}",
+                            "username": "${{ vars.OSS_JENKINS_USER }}",
                             "password": "${{ secrets.OSS_JENKINS_PASS }}"
                         }]
 
